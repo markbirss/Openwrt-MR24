@@ -15,6 +15,10 @@
 	compatible = "apm,bluestone";
 	dcr-parent = <&{/cpus/cpu@0}>;
 
+	chosen {
+		bootargs = "rootfstype=squashfs noinitrd";
+	};
+
 	aliases {
 		ethernet0 = &EMAC0;
 		serial0 = &UART0;
