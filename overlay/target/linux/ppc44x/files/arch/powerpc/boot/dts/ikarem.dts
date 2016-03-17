@@ -16,7 +16,7 @@
 	dcr-parent = <&{/cpus/cpu@0}>;
 
 	chosen {
-		bootargs = "rootfstype=squashfs noinitrd";
+		bootargs = "rootfstype=squashfs noinitrd panic=3";
 	};
 
 	aliases {
@@ -222,7 +222,7 @@
                                                 #address-cells = <1>;
                                                 #size-cells = <1>;
                                                 partition@0 {
-                                                        label = "firmware";
+                                                        label = "u-boot";
                                                         reg   = <0x00000000 0x00170000>;
                                                 };
                                                 partition@170000 {
