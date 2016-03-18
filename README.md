@@ -2,7 +2,7 @@
 
 Bringup repo for the Cisco Meraki MR24 on OpenWRT!
 
-Currently based on commit http://git.openwrt.org/?p=openwrt.git;a=commit;h=63bce15a60d6a307540662f87ce1b2515c553800
+Currently based on commit http://git.openwrt.org/?p=openwrt.git;a=commit;h=07c8b04a0b71fc2e6df0fa9458ef56a2f171f61d
 
 Building
 -----

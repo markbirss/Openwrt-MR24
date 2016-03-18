@@ -1,5 +1,5 @@
 /*
- * Device Tree Source for Meraki MR24 (Ikarem)
+ * Device Tree Source for Meraki MR24 (Ikarem) based on bluestone
  *
  * This file is licensed under the terms of the GNU General Public
  * License version 2.  This program is licensed "as is" without
@@ -16,7 +16,7 @@
 	dcr-parent = <&{/cpus/cpu@0}>;
 
 	chosen {
-		bootargs = "rootfstype=squashfs noinitrd panic=3";
+		bootargs = "console=ttyS0,115200 rootfstype=squashfs noinitrd panic=3";
 	};
 
 	aliases {
