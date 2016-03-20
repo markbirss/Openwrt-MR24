@@ -16,7 +16,7 @@
 	dcr-parent = <&{/cpus/cpu@0}>;
 
 	chosen {
-		bootargs = "console=ttyS0,115200 rootfstype=squashfs noinitrd panic=3";
+		bootargs = "console=ttyS0,115200 rootfstype=squashfs panic=3 earlyprink mtdoops.mtddev=oops";
 	};
 
 	aliases {

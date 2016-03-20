@@ -38,6 +38,12 @@ define Image/Build/meraki
 		dd if=$(KDIR)/root.$(1) bs=256k conv=sync; \
 	) > $(BIN_DIR)/$(IMG_PREFIX)-$(2).img
 	$(STAGING_DIR_HOST)/bin/mkmerakifw -B mr24 -i $(BIN_DIR)/$(IMG_PREFIX)-$(2).img -o $(BIN_DIR)/$(IMG_PREFIX)-$(2)-patched.img -s
+	( \
+		dd if=$(KDIR)/$(IMG_PREFIX)-ikarem.fdt bs=63k conv=sync; \
+		dd if=$(KDIR)/uImage-initramfs bs=128k conv=sync; \
+		dd if=$(KDIR)/root.$(1) bs=256k conv=sync; \
+	) > $(BIN_DIR)/$(IMG_PREFIX)-initramfs-$(2).img
+	$(STAGING_DIR_HOST)/bin/mkmerakifw -B mr24 -i $(BIN_DIR)/$(IMG_PREFIX)-initramfs-$(2).img -o $(BIN_DIR)/$(IMG_PREFIX)-initramfs-$(2)-patched.img -s
 endef
 
 define Image/Build/Profile/MR24

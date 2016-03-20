@@ -14,6 +14,13 @@ Building
 
 Note that you will need to run a modify on the first compile to select the ppc44x image in the OpenWRT menuconfig.
 
+Booting
+-----
+The MR24 comes with U-Boot, so you can boot an image using:
+```
+setenv netloadmethod tftpboot; run meraki_load_net; setenv bootargs console=ttyS0,115200 rootfstype=squashfs panic=10 earlyprink mtdoops.mtddev=oops; bootm ${meraki_loadaddr_kernel} - ${meraki_loadaddr_fdt}
+```
+
 To Do
 -----
 ##### MR24

@@ -19,9 +19,9 @@ DEFAULT_PACKAGES.nas:=block-mount fdisk lsblk mdadm
 DEFAULT_PACKAGES.router:=dnsmasq iptables ip6tables ppp ppp-mod-pppoe firewall odhcpd odhcp6c
 DEFAULT_PACKAGES.bootloader:=
 
-#ifneq ($(DUMP),)
+ifneq ($(DUMP),)
   all: dumpinfo
-#endif
+endif
 
 target_conf=$(subst .,_,$(subst -,_,$(subst /,_,$(1))))
 ifeq ($(DUMP),)
