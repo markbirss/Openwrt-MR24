@@ -18,25 +18,24 @@ Booting
 -----
 The MR24 comes with U-Boot, so you can boot an image using:
 ```
-setenv netloadmethod tftpboot; run meraki_load_net; setenv bootargs root=/dev/ram console=ttyS0,${baudrate} ubi.mtd=ubi panic=10 earlyprink mtdoops.mtddev=oops; run meraki_bootlinux
+setenv netloadmethod tftpboot; run meraki_load_net; setenv bootargs console=ttyS0,${baudrate} mtdoops.mtddev=oops; run meraki_bootlinux
 ```
 
 To Do
 -----
 ##### MR24
 * Sysupgrade
-* WiFi
-* Ethernet
-* LED's/GPIOs
 * System Integration
-* Kernel Device Profile
-* Kernel Header Generation
-* Determine NAND layout
+* Port to a current device target
 
 Working
 -----
 ##### MR24
- * Nothing
+* WiFi
+* Ethernet
+* LED's/GPIOs
+* Kernel Device Profile
+* Kernel Header Generation
 
 Notice
 ------

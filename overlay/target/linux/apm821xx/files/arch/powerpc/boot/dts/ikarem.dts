@@ -220,6 +220,7 @@
                                                 partition@0 {
                                                         label = "u-boot";
                                                         reg   = <0x00000000 0x00170000>;
+                                                        read-only;
                                                 };
                                                 partition@170000 {
                                                         label = "oops";
@@ -258,31 +259,31 @@
 			gpio-leds {
 				compatible = "gpio-leds";
 				power-green {
-					label = "mr24:power:green";
+					label = "mr24:green:power";
 					gpios = <&GPIO0 18 1>;
 				};
 				power-orange {
-					label = "mr24:power:orange";
+					label = "mr24:orange:power";
 					gpios = <&GPIO0 19 1>;
 				};
 				lan {
-					label = "mr24:lan:green";
+					label = "mr24:green:wan";
 					gpios = <&GPIO0 17 1>;
 				};
 				ssi-0 {
-					label = "mr24:ssi:0";
+					label = "mr24:green:wifi4";
 					gpios = <&GPIO0 23 1>;
 				};
 				ssi-1 {
-					label = "mr24:ssi:1";
+					label = "mr24:green:wifi3";
 					gpios = <&GPIO0 22 1>;
 				};
 				ssi-2 {
-					label = "mr24:ssi:2";
+					label = "mr24:green:wifi2";
 					gpios = <&GPIO0 21 1>;
 				};
 				ssi-3 {
-					label = "mr24:ssi:3";
+					label = "mr24:green:wifi1";
 					gpios = <&GPIO0 20 1>;
 				};
 			};
@@ -294,7 +295,7 @@
              poll-interval = <60>;       /* 3 * 20 = 60ms */
              autorepeat;
              button@1 {
-               label = "soft_reset";
+               label = "reset";
                linux,code = <0x198>;     /* EV_RESTART    */
                linux,input-type = <1>;   /* EV_KEY        */
                gpios = <&GPIO0 16 1>;
@@ -307,7 +308,9 @@
 				interrupt-parent = <&UIC0>;
 				interrupts = <0x2 0x4>;
 				#address-cells = <1>;
-                #size-cells = <0>;
+				#size-cells = <0>;
+				/* Boot ROM is at 0x52-0x53, do not touch */
+				/* Unknown chip at 0x6e, not sure what it is */
 			};
 
 			IIC1: i2c@ef600800 {
