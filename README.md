@@ -58,12 +58,9 @@ Flashing
   6. Create a recovery UBI partition. This will host our initramfs kernel we are running so our board can have an image to failback to in case of a future bad flash, or update issue. Note you will first want to upload a copy of the initramfs image to the board (which can be done with SCP/HTTP Server). In the below tutorial note that the new partition is made to be just a bit larger than the initramfs image. You will want to do this as well.
 
   ```
-  root@OpenWrt:/# ls -alh /tmp/openwrt-m821xx-generic-mr24-initramfs.img
-  -rw-r--r--    1 root     root        4.9M Mar 20 18:52 /tmp/openwrt-m821xx-generic-mr24-initramfs.img
-  root@OpenWrt:/# ubimkvol /dev/ubi0 -s 5MiB -N recovery
-  Volume ID 1, size 331 LEBs (5253632 bytes, 5.0 MiB), LEB size 15872 bytes (15.5 KiB), dynamic, name "recovery", alignment 1
-  root@OpenWrt:/# ubiupdatevol /dev/ubi0_1 /tmp/openwrt-m821xx-generic-mr24-initramfs.img
-  root@OpenWrt:/#
+  ls -alh /tmp/openwrt-m821xx-generic-mr24-initramfs.img
+  ubimkvol /dev/ubi0 -s 5MiB -N recovery
+  ubiupdatevol /dev/ubi0_1 /tmp/openwrt-m821xx-generic-mr24-initramfs.img
   ```
 
   7. SysUpgrade flashing goes here once it's complete.
@@ -72,6 +69,7 @@ To Do
 -----
 ##### MR24
 * Sysupgrade
+* Fix UBI rootfs mounting
 * Port to a current target (will need a subtarget for nand)
 
 Working

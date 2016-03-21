@@ -36,7 +36,7 @@ define Image/Build/meraki
 	$(call prepare_generic_squashfs,$(KDIR)/root.squashfs)
 	( \
 		dd if=$(KDIR)/$(IMG_PREFIX)-ikarem.fdt bs=63k conv=sync; \
-		dd if=$(KDIR)/uImage bs=1984k conv=sync; \
+		dd if=$(KDIR)/uImage bs=64k conv=sync; \
 	) > $(KDIR_TMP)/$(IMG_PREFIX)-$(2).img
 	$(STAGING_DIR_HOST)/bin/mkmerakifw -B mr24 -i $(KDIR_TMP)/$(IMG_PREFIX)-$(2).img -o $(BIN_DIR)/$(IMG_PREFIX)-$(2).img -s
 endef
