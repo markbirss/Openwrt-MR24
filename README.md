@@ -34,11 +34,13 @@ Flashing
 
   setenv meraki_bootkernel bootm \${meraki_loadaddr_kernel} - \${meraki_loadaddr_fdt}
 
-  setenv meraki_boot run meraki_ubi meraki_bootargs\; run meraki_load1 meraki_checkpart meraki_bootkernel\; run meraki_load2 meraki_checkpart meraki_bootlinux
+  setenv openwrt_bootargs setenv bootargs board=MR24 console=ttyS0,\${baudrate} rootfstype=squashfs mtdoops.mtddev=oops
+
+  setenv meraki_boot run meraki_ubi openwrt_bootargs\; run meraki_load1 meraki_checkpart meraki_bootkernel\; run meraki_load2 meraki_checkpart meraki_bootlinux
 
   saveenv
   ```
-  
+
   3. Use the above Booting commands to boot into an initramfs build of OpenWRT using TFTP
   4. Once booted, find the UBI Volume ID of board-config. This is done with `ubinfo /dev/ubi0 -N board-config`
   5. Cleanup and move around UBI partitions for maximum space. Note that in this example, replace `XX` with the Volume ID for `board-config`:
