@@ -69,7 +69,6 @@ To Do
 -----
 ##### MR24
 * Sysupgrade
-* Fix UBI rootfs mounting
 * Port to a current target (will need a subtarget for nand)
 
 Working

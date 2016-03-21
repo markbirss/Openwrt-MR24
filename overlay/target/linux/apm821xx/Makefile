@@ -21,7 +21,6 @@ include $(INCLUDE_DIR)/target.mk
 KERNELNAME:=uImage zImage
 
 DEFAULT_PACKAGES += \
-	kmod-input-core kmod-input-gpio-keys kmod-button-hotplug \
 	kmod-leds-gpio kmod-booke-wdt swconfig kmod-ath9k\
 	wpad-mini
 

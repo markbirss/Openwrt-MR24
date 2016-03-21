@@ -299,10 +299,9 @@
              poll-interval = <60>;       /* 3 * 20 = 60ms */
              autorepeat;
              button@1 {
-               label = "reset";
-               linux,code = <0x198>;     /* EV_RESTART    */
-               linux,input-type = <1>;   /* EV_KEY        */
-               gpios = <&GPIO0 16 1>;
+				label = "Reset button";
+				linux,code = <0x198>; /* KEY_RESTART */
+				gpios = <&GPIO0 16 1>;
              };
          };
 
