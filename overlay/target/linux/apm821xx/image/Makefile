@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2016 Chris Blake <chrisrblake93@gmail.com>
+# Copyright (C) 2016 OpenWrt.org
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
@@ -36,7 +36,7 @@ define Image/Build/meraki
 	$(call prepare_generic_squashfs,$(KDIR)/root.squashfs)
 	( \
 		dd if=$(KDIR)/$(IMG_PREFIX)-ikarem.fdt bs=63k conv=sync; \
-		dd if=$(KDIR)/uImage bs=64k conv=sync; \
+		dd if=$(KDIR)/uImage bs=1984k conv=sync; \
 	) > $(KDIR_TMP)/$(IMG_PREFIX)-$(2).img
 	$(STAGING_DIR_HOST)/bin/mkmerakifw -B mr24 -i $(KDIR_TMP)/$(IMG_PREFIX)-$(2).img -o $(BIN_DIR)/$(IMG_PREFIX)-$(2).img -s
 endef
@@ -47,7 +47,7 @@ define Image/Build/meraki/initramfs
 		$(BIN_DIR)/$(IMG_PREFIX)-uramdisk.image.gz
 	( \
 		dd if=$(KDIR)/$(IMG_PREFIX)-ikarem.fdt bs=63k conv=sync; \
-		dd if=$(KDIR)/uImage bs=64k conv=sync; \
+		dd if=$(KDIR)/uImage bs=1984k conv=sync; \
 		dd if=$(BIN_DIR)/$(IMG_PREFIX)-uramdisk.image.gz bs=128k conv=sync; \
 	) > $(KDIR_TMP)/$(IMG_PREFIX)-$(2)-initramfs.img
 		$(STAGING_DIR_HOST)/bin/mkmerakifw -B mr24 -i $(KDIR_TMP)/$(IMG_PREFIX)-$(2)-initramfs.img -o $(BIN_DIR)/$(IMG_PREFIX)-$(2)-initramfs.img -s

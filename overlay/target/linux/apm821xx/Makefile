@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2016 Chris Blake <chrisrblake93@gmail.com>
+# Copyright (C) 2016 OpenWrt.org
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
@@ -10,7 +10,7 @@ ARCH:=powerpc
 BOARD:=apm821xx
 BOARDNAME:=AppliedMicro APM821xx
 CPU_TYPE:=464
-FEATURES:=squashfs nand
+FEATURES:=squashfs nand rtc
 MAINTAINER:=Chris Blake <chrisrblake93@gmail.com>
 SUBTARGETS=generic
 
@@ -22,7 +22,8 @@ KERNELNAME:=uImage zImage
 
 DEFAULT_PACKAGES += \
 	kmod-input-core kmod-input-gpio-keys kmod-button-hotplug \
-	kmod-leds-gpio kmod-ath9k
+	kmod-leds-gpio kmod-booke-wdt swconfig kmod-ath9k\
+	wpad-mini
 
 define Target/Description
 	Build images for AppliedMicro APM821xx based boards.

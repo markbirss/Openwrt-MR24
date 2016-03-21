@@ -1,5 +1,9 @@
 /*
- * Device Tree Source for Meraki MR24 (Ikarem) based on bluestone
+ * Device Tree Source for Meraki MR24 (Ikarem)
+ *
+ * Copyright (C) 2016 Chris Blake <chrisrblake93@gmail.com>
+ *
+ * Based on Cisco Meraki GPL Release r23-20150601 MR24 DTS
  *
  * This file is licensed under the terms of the GNU General Public
  * License version 2.  This program is licensed "as is" without

@@ -1,0 +1,25 @@
+#!/bin/sh
+#
+# Copyright (C) 2016 OpenWrt.org
+#
+
+. /lib/functions/system.sh
+. /lib/functions/uci-defaults.sh
+. /lib/apm821xx.sh
+
+board_config_update
+
+board=$(apm821xx_board_name)
+
+case "$board" in
+mr24)
+	ucidef_set_interface_lan "eth0"
+	;;
+*)
+	ucidef_set_interfaces_lan_wan "eth0" "eth1"
+	;;
+esac
+
+board_config_flush
+
+exit 0
