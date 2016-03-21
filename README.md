@@ -62,13 +62,11 @@ Flashing
   ubimkvol /dev/ubi0 -s 5MiB -N recovery
   ubiupdatevol /dev/ubi0_1 /tmp/openwrt-m821xx-generic-mr24-initramfs.img
   ```
-
   7. SysUpgrade flashing goes here once it's complete.
 
 To Do
 -----
 ##### MR24
-* Sysupgrade
 * Port to a current target (will need a subtarget for nand)
 
 Working
@@ -77,7 +75,9 @@ Working
 * WiFi
 * Ethernet
 * LED's/GPIOs
+* Reset button
 * System Integration
+* Sysupgrade Support
 * Kernel Device Profile
 * Kernel Header Generation
 
