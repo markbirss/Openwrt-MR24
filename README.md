@@ -26,6 +26,7 @@ Flashing
 -----
   1. Boot into U-Boot over UART
   2. Set the new U-Boot settings to boot our images. This will set the proper UBI partition names, disable initramfs loading for the kenel, and keep it for the recovery initramfs image.
+
   ```
   setenv meraki_load1 ubi read \${meraki_loadaddr} kernel
 
@@ -37,9 +38,11 @@ Flashing
 
   saveenv
   ```
+  
   3. Use the above Booting commands to boot into an initramfs build of OpenWRT using TFTP
   4. Once booted, find the UBI Volume ID of board-config. This is done with `ubinfo /dev/ubi0 -N board-config`
   5. Cleanup and move around UBI partitions for maximum space. Note that in this example, replace `XX` with the Volume ID for `board-config`:
+
   ```
   ubirmvol /dev/ubi0 -N part1
   ubirmvol /dev/ubi0 -N part2
@@ -49,7 +52,9 @@ Flashing
   ubimkvol /dev/ubi0 -s 24KiB -N board-config
   ubiupdatevol /dev/ubi0_0 /tmp/board-config.img
   ```
+
   6. Create a recovery UBI partition. This will host our initramfs kernel we are running so our board can have an image to failback to in case of a future bad flash, or update issue. Note you will first want to upload a copy of the initramfs image to the board (which can be done with SCP/HTTP Server). In the below tutorial note that the new partition is made to be just a bit larger than the initramfs image. You will want to do this as well.
+
   ```
   root@OpenWrt:/# ls -alh /tmp/openwrt-m821xx-generic-mr24-initramfs.img
   -rw-r--r--    1 root     root        4.9M Mar 20 18:52 /tmp/openwrt-m821xx-generic-mr24-initramfs.img
@@ -58,6 +63,7 @@ Flashing
   root@OpenWrt:/# ubiupdatevol /dev/ubi0_1 /tmp/openwrt-m821xx-generic-mr24-initramfs.img
   root@OpenWrt:/#
   ```
+
   7. SysUpgrade flashing goes here once it's complete.
 
 To Do
