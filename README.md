@@ -18,7 +18,7 @@ Booting
 -----
 The MR24 comes with U-Boot, so you can boot an initramfs image using:
 ```
-setenv netloadmethod tftpboot; run meraki_load_net; setenv bootargs console=ttyS0,${baudrate} rootfstype=squashfs mtdoops.mtddev=oops; run meraki_checkpart meraki_bootlinux
+setenv netloadmethod tftpboot; setenv bootargs console=ttyS0,${baudrate} rootfstype=squashfs mtdoops.mtddev=oops; run meraki_load_net meraki_checkpart meraki_bootlinux
 ```
 Note that the file will need to be named `mr24.bin` and it will need to be hosted by a TFTP server at 192.168.1.101/24
 
@@ -55,12 +55,12 @@ Flashing
   ubiupdatevol /dev/ubi0_0 /tmp/board-config.img
   ```
 
-  6. Create a recovery UBI partition. This will host our initramfs kernel we are running so our board can have an image to failback to in case of a future bad flash, or update issue. Note you will first want to upload a copy of the initramfs image to the board (which can be done with SCP/HTTP Server). In the below tutorial note that the new partition is made to be just a bit larger than the initramfs image. You will want to do this as well.
+  6. Create a recovery UBI partition. This will host an initramfs build so our board can have a failback image in case of a bad flash, or sysupgrade issue. Note you will first want to upload a copy of the initramfs image to the board (which can be done with SCP/HTTP Server). In the below tutorial note that the new partition is made to be just a bit larger than the initramfs image. You will want to do this as well.
 
   ```
-  ls -alh /tmp/openwrt-m821xx-generic-mr24-initramfs.img
+  ls -alh /tmp/openwrt-m821xx-generic-mr24-initramfs.bin
   ubimkvol /dev/ubi0 -s 5MiB -N recovery
-  ubiupdatevol /dev/ubi0_1 /tmp/openwrt-m821xx-generic-mr24-initramfs.img
+  ubiupdatevol /dev/ubi0_1 /tmp/openwrt-m821xx-generic-mr24-initramfs.bin
   ```
   7. Once done, you can now load up LuCI at 192.168.1.1, and use the sysupgrade option to flash the full image to the device using the sysupgrade file. From this point on, any future updates/builds can just be flashed through LuCI.
 
