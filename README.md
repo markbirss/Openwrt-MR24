@@ -62,7 +62,7 @@ Flashing
   ubimkvol /dev/ubi0 -s 5MiB -N recovery
   ubiupdatevol /dev/ubi0_1 /tmp/openwrt-m821xx-generic-mr24-initramfs.img
   ```
-  7. SysUpgrade flashing goes here once it's complete.
+  7. Once done, you can now load up LuCI at 192.168.1.1, and use the sysupgrade option to flash the full image to the device using the sysupgrade file. From this point on, any future updates/builds can just be flashed through LuCI.
 
 To Do
 -----
