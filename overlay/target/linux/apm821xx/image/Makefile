@@ -51,8 +51,10 @@ define Device/mr24
   IMAGES := sysupgrade.tar initramfs.bin
   DTS := MR24
   DTB_SIZE := 63k
-  KERNEL_SIZE := 1984k
+  KERNEL_SIZE := 2048k
   IMAGE_SIZE := 8191k
+  KERNEL_ENTRY := 0x00000000
+  KERNEL_LOADADDR := 0x00000000
   KERNEL := kernel-bin | gzip | uImage gzip | MerakiAdd-dtb | MerakiNAND
   IMAGE/sysupgrade.tar := sysupgrade-nand
   IMAGE/initramfs.bin := kernel-bin | gzip | uImage gzip | MerakiAdd-dtb | pad-to 2047k | MerakiAdd-initramfs | MerakiNAND

@@ -10,7 +10,7 @@ ARCH:=powerpc
 BOARD:=apm821xx
 BOARDNAME:=AppliedMicro APM821xx
 CPU_TYPE:=464
-FEATURES:=squashfs nand rtc ramdisk
+FEATURES:=squashfs nand rtc
 MAINTAINER:=Chris Blake <chrisrblake93@gmail.com>
 SUBTARGETS=generic
 
