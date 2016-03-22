@@ -96,7 +96,7 @@
 	};
 
 	/* KPH check the following */
-	OCM1: ocm@400040000 {
+	OCM: ocm@400040000 {
 		compatible = "ibm,ocm";
 		status = "okay";
 		cell-index = <1>;
@@ -126,7 +126,7 @@
 
 	/* kph check the below */
 	CPM0: cpm {
-		compatible = "ibm, cpm-apm821xx", "ibm,cpm";
+		compatible = "ibm,cpm-apm821xx", "ibm,cpm";
 		cell-index = <0>;
 		dcr-reg = <0x160 0x003>;
 		pm-cpu = <0x02000000>;
@@ -151,7 +151,7 @@
 
 		/* kph check the below */
 		CRYPTO: crypto@180000 {
-			compatible = amcc,ppc4xx-crypto";
+			compatible = "amcc,ppc4xx-crypto";
 			reg = <4 0x00180000 0x80400>;
 			interrupt-parent = <&UIC0>;
 			interrupts = <0x1d 0x4>;
@@ -160,7 +160,7 @@
 		/* kph check the below */
 		PKA: pka@114000 {
 			device_type = "pka";
-			compatible = "ppc4xx-pka", "apm, ppc4xx-pka";
+			compatible = "ppc4xx-pka", "amcc,ppc4xx-pka";
 			reg = <4 0x00114000 0x4000>;
 			interrupt-parent = <&UIC0>;
 			interrupts = <0x14 0x2>;
@@ -217,26 +217,22 @@
 					bank-settings = <0x80002222>;
 					#address-cells = <1>;
 					#size-cells = <1>;
-					/*32mb Nand Flash*/
+					/* 32 MiB NAND Flash */
 					nand {
-                                                #address-cells = <1>;
-                                                #size-cells = <1>;
-                                                partition@0 {
-                                                        label = "u-boot";
-                                                        reg   = <0x00000000 0x00170000>;
-                                                        read-only;
-                                                };
-                                                partition@170000 {
-                                                        label = "oops";
-                                                        reg   = <0x00170000 0x00010000>;
-                                                };
-                                                partition@180000 {
-                                                        label = "ubi";
-                                                        reg   = <0x00180000 0x01e80000>;
-                                                };
-						all {
-							label = "all";
-							reg   = <0x00000000 0x02000000>;
+						#address-cells = <1>;
+						#size-cells = <1>;
+						partition@0 {
+							label = "u-boot";
+							reg = <0x00000000 0x00170000>;
+							read-only;
+						};
+						partition@170000 {
+							label = "oops";
+							reg = <0x00170000 0x00010000>;
+						};
+						partition@180000 {
+							label = "ubi";
+							reg = <0x00180000 0x01e80000>;
 						};
 					};
 				};
@@ -292,18 +288,18 @@
 				};
 			};
 
-         gpio_keys_polled {
-             compatible = "gpio-keys-polled";
-             #address-cells = <1>;
-             #size-cells = <0>;
-             poll-interval = <60>;       /* 3 * 20 = 60ms */
-             autorepeat;
-             button@1 {
-				label = "Reset button";
-				linux,code = <0x198>; /* KEY_RESTART */
-				gpios = <&GPIO0 16 1>;
-             };
-         };
+			gpio_keys_polled {
+				compatible = "gpio-keys-polled";
+				#address-cells = <1>;
+				#size-cells = <0>;
+				poll-interval = <60>;	/* 3 * 20 = 60ms */
+				autorepeat;
+				button@1 {
+					label = "Reset button";
+					linux,code = <0x198>; /* KEY_RESTART */
+					gpios = <&GPIO0 16 1>;
+				};
+			};
 
 			IIC0: i2c@ef600700 {
 				compatible = "ibm,iic";

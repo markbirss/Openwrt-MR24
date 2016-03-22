@@ -10,7 +10,7 @@ ARCH:=powerpc
 BOARD:=apm821xx
 BOARDNAME:=AppliedMicro APM821xx
 CPU_TYPE:=464
-FEATURES:=squashfs nand rtc
+FEATURES:=squashfs nand rtc ramdisk
 MAINTAINER:=Chris Blake <chrisrblake93@gmail.com>
 SUBTARGETS=generic
 
@@ -18,10 +18,10 @@ KERNEL_PATCHVER:=4.4
 
 include $(INCLUDE_DIR)/target.mk
 
-KERNELNAME:=uImage zImage
+KERNELNAME:=uImage
 
 DEFAULT_PACKAGES += \
-	kmod-leds-gpio kmod-booke-wdt swconfig kmod-ath9k\
+	kmod-leds-gpio kmod-booke-wdt swconfig kmod-ath9k \
 	wpad-mini
 
 define Target/Description
