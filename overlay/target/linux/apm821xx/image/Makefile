@@ -53,9 +53,9 @@ define Device/mr24
   DTB_SIZE := 63k
   KERNEL_SIZE := 1984k
   IMAGE_SIZE := 8191k
-  KERNEL := kernel-bin | lzma | uImage lzma | MerakiAdd-dtb | MerakiNAND
+  KERNEL := kernel-bin | gzip | uImage gzip | MerakiAdd-dtb | MerakiNAND
   IMAGE/sysupgrade.tar := sysupgrade-nand
-  IMAGE/initramfs.bin := kernel-bin | lzma | uImage lzma | MerakiAdd-dtb | pad-to 2047k | MerakiAdd-initramfs | MerakiNAND
+  IMAGE/initramfs.bin := kernel-bin | gzip | uImage gzip | MerakiAdd-dtb | pad-to 2047k | MerakiAdd-initramfs | MerakiNAND
 endef
 TARGET_DEVICES += mr24
 
