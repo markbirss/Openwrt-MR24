@@ -271,19 +271,19 @@
 					gpios = <&GPIO0 17 1>;
 				};
 				ssi-0 {
-					label = "mr24:green:wifi4";
+					label = "mr24:green:wifi1";
 					gpios = <&GPIO0 23 1>;
 				};
 				ssi-1 {
-					label = "mr24:green:wifi3";
+					label = "mr24:green:wifi2";
 					gpios = <&GPIO0 22 1>;
 				};
 				ssi-2 {
-					label = "mr24:green:wifi2";
+					label = "mr24:green:wifi3";
 					gpios = <&GPIO0 21 1>;
 				};
 				ssi-3 {
-					label = "mr24:green:wifi1";
+					label = "mr24:green:wifi4";
 					gpios = <&GPIO0 20 1>;
 				};
 			};
