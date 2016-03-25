@@ -1,0 +1,117 @@
+From 2159e200fcb68f88a94b1d5570d6000c100133a8 Mon Sep 17 00:00:00 2001
+From: Christian Lamparter <chunkeey@googlemail.com>
+Date: Fri, 25 Mar 2016 19:00:05 +0100
+Subject: [PATCH] ppc4xx-rng: fix crash during init
+
+This patch fixes a crash that happens in the ppc4xx-rng driver
+when accessing the main crypto core to enable the true random
+number generator.
+
+Signed-off-by: Christian Lamparter <chunkeey@googlemail.com>
+---
+ drivers/char/hw_random/ppc4xx-rng.c     | 42 ---------------------------------
+ drivers/crypto/amcc/crypto4xx_core.c    |  1 +
+ drivers/crypto/amcc/crypto4xx_reg_def.h |  1 +
+ 3 files changed, 2 insertions(+), 42 deletions(-)
+
+diff --git a/drivers/char/hw_random/ppc4xx-rng.c b/drivers/char/hw_random/ppc4xx-rng.c
+index c0db438..a9a8a29 100644
+--- a/drivers/char/hw_random/ppc4xx-rng.c
++++ b/drivers/char/hw_random/ppc4xx-rng.c
+@@ -17,9 +17,6 @@
+ #include <linux/of_platform.h>
+ #include <asm/io.h>
+ 
+-#define PPC4XX_TRNG_DEV_CTRL 0x60080
+-
+-#define PPC4XX_TRNGE 0x00020000
+ #define PPC4XX_TRNG_CTRL 0x0008
+ #define PPC4XX_TRNG_CTRL_DALM 0x20
+ #define PPC4XX_TRNG_STAT 0x0004
+@@ -51,40 +48,6 @@ static int ppc4xx_rng_data_read(struct hwrng *rng, u32 *data)
+ 	return 4;
+ }
+ 
+-static int ppc4xx_rng_enable(int enable)
+-{
+-	struct device_node *ctrl;
+-	void __iomem *ctrl_reg;
+-	int err = 0;
+-	u32 val;
+-
+-	/* Find the main crypto device node and map it to turn the TRNG on */
+-	ctrl = of_find_compatible_node(NULL, NULL, "amcc,ppc4xx-crypto");
+-	if (!ctrl)
+-		return -ENODEV;
+-
+-	ctrl_reg = of_iomap(ctrl, 0);
+-	if (!ctrl_reg) {
+-		err = -ENODEV;
+-		goto out;
+-	}
+-
+-	val = in_le32(ctrl_reg + PPC4XX_TRNG_DEV_CTRL);
+-
+-	if (enable)
+-		val |= PPC4XX_TRNGE;
+-	else
+-		val = val & ~PPC4XX_TRNGE;
+-
+-	out_le32(ctrl_reg + PPC4XX_TRNG_DEV_CTRL, val);
+-	iounmap(ctrl_reg);
+-
+-out:
+-	of_node_put(ctrl);
+-
+-	return err;
+-}
+-
+ static struct hwrng ppc4xx_rng = {
+ 	.name = MODULE_NAME,
+ 	.data_present = ppc4xx_rng_data_present,
+@@ -100,10 +63,6 @@ static int ppc4xx_rng_probe(struct platform_device *dev)
+ 	if (!rng_regs)
+ 		return -ENODEV;
+ 
+-	err = ppc4xx_rng_enable(1);
+-	if (err)
+-		return err;
+-
+ 	out_le32(rng_regs + PPC4XX_TRNG_CTRL, PPC4XX_TRNG_CTRL_DALM);
+ 	ppc4xx_rng.priv = (unsigned long) rng_regs;
+ 
+@@ -117,7 +76,6 @@ static int ppc4xx_rng_remove(struct platform_device *dev)
+ 	void __iomem *rng_regs = (void __iomem *) ppc4xx_rng.priv;
+ 
+ 	hwrng_unregister(&ppc4xx_rng);
+-	ppc4xx_rng_enable(0);
+ 	iounmap(rng_regs);
+ 
+ 	return 0;
+diff --git a/drivers/crypto/amcc/crypto4xx_core.c b/drivers/crypto/amcc/crypto4xx_core.c
+index 62134c8..cb0b262 100644
+--- a/drivers/crypto/amcc/crypto4xx_core.c
++++ b/drivers/crypto/amcc/crypto4xx_core.c
+@@ -90,6 +90,7 @@ static void crypto4xx_hw_init(struct crypto4xx_device *dev)
+ 	writel(ring_ctrl.w, dev->ce_base + CRYPTO4XX_RING_CTRL);
+ 	device_ctrl = readl(dev->ce_base + CRYPTO4XX_DEVICE_CTRL);
+ 	device_ctrl |= PPC4XX_DC_3DES_EN;
++	device_ctrl |= PPC4XX_TRNGE;
+ 	writel(device_ctrl, dev->ce_base + CRYPTO4XX_DEVICE_CTRL);
+ 	writel(dev->gdr_pa, dev->ce_base + CRYPTO4XX_GATH_RING_BASE);
+ 	writel(dev->sdr_pa, dev->ce_base + CRYPTO4XX_SCAT_RING_BASE);
+diff --git a/drivers/crypto/amcc/crypto4xx_reg_def.h b/drivers/crypto/amcc/crypto4xx_reg_def.h
+index 5f5fbc0..914efc6 100644
+--- a/drivers/crypto/amcc/crypto4xx_reg_def.h
++++ b/drivers/crypto/amcc/crypto4xx_reg_def.h
+@@ -124,6 +124,7 @@
+ #define PPC4XX_BYTE_ORDER			0x22222
+ #define PPC4XX_INTERRUPT_CLR			0x3ffff
+ #define PPC4XX_PRNG_CTRL_AUTO_EN		0x3
++#define PPC4XX_TRNGE				0x00020000
+ #define PPC4XX_DC_3DES_EN			1
+ #define PPC4XX_INT_DESCR_CNT			4
+ #define PPC4XX_INT_TIMEOUT_CNT			0
+-- 
+2.8.0.rc3
+
