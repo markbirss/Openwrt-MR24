@@ -58,11 +58,11 @@ Flashing
   6. Create a recovery UBI partition. This will host an initramfs build so our board can have a failback image in case of a bad flash, or sysupgrade issue. Note you will first want to upload a copy of the initramfs image to the board (which can be done with SCP/HTTP Server). In the below tutorial note that the new partition is made to be just a bit larger than the initramfs image. You will want to do this as well.
 
   ```
-  ls -alh /tmp/openwrt-m821xx-generic-mr24-initramfs.bin
+  ls -alh /tmp/openwrt-apm821xx-generic-mr24-initramfs-kernel.bin
   ubimkvol /dev/ubi0 -s 5MiB -N recovery
-  ubiupdatevol /dev/ubi0_1 /tmp/openwrt-m821xx-generic-mr24-initramfs.bin
+  ubiupdatevol /dev/ubi0_1 /tmp/openwrt-apm821xx-generic-mr24-initramfs-kernel.bin
   ```
-  7. Once done, you can now load up LuCI at 192.168.1.1, and use the sysupgrade option to flash the full image to the device using the sysupgrade file. From this point on, any future updates/builds can just be flashed through LuCI.
+  7. Once done, you can now load up LuCI at 192.168.1.1, and use the sysupgrade option to flash the full image to the device using the sysupgrade file named `openwrt-apm821xx-generic-mr24-squashfs-sysupgrade.tar`. From this point on, any future updates/builds can just be flashed through LuCI.
 
 To Do
 -----
