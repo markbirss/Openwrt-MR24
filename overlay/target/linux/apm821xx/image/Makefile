@@ -58,7 +58,7 @@ endef
 define Device/mr24
   BOARDNAME = MR24
   BLOCKSIZE := 64k
-  IMAGES := sysupgrade.tar recovery.bin test.bin
+  IMAGES := sysupgrade.tar
   DTS := MR24
   DTB_SIZE := 63k
   KERNEL_SIZE := 2048k
@@ -66,8 +66,9 @@ define Device/mr24
   KERNEL_ENTRY := 0x00000000
   KERNEL_LOADADDR := 0x00000000
   KERNEL := kernel-bin | gzip | uImage gzip | MerakiAdd-dtb | MerakiNAND
-  IMAGE/recovery.bin := copy-file $(KDIR)/vmlinux | gzip | uImage gzip | MerakiAdd-dtb | pad-to 2047k | MerakiAdd-initramfs | MerakiNAND
+  KERNEL_INITRAMFS := copy-file $(KDIR)/vmlinux | gzip | uImage gzip | MerakiAdd-dtb | pad-to 2047k | MerakiAdd-initramfs | MerakiNAND
   IMAGE/sysupgrade.tar := sysupgrade-nand
+
 endef
 TARGET_DEVICES += mr24
 
