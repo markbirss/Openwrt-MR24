@@ -168,7 +168,7 @@
 
 		/* kph check the below */
 		TRNG: trng@110000 {
-			compatible = "ppc4xx-trng", "amcc,ppc4xx-hwrng";
+			compatible = "ppc4xx-trng", "amcc,ppc460ex-rng";
 			reg = <4 0x00110000 0x50>;
 			interrupt-parent = <&UIC1>;
 			interrupts = <0x3 0x2>;
