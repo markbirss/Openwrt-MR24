@@ -7,7 +7,7 @@
 
 define Profile/MR24
 	NAME:=Meraki MR24
-	PACKAGES:=kmod-spi-gpio kmod-gpio-button-hotplug
+	PACKAGES:=kmod-spi-gpio kmod-gpio-button-hotplug swconfig kmod-ath9k
 endef
 
 define Profile/MR24/description

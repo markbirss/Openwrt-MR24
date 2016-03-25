@@ -2,7 +2,7 @@
 
 Bringup repo for the Cisco Meraki MR24 on OpenWRT!
 
-Currently based on commit http://git.openwrt.org/?p=openwrt.git;a=commit;h=54eb6ade49863de101866981e917e732fc75d4e3
+Currently based on commit http://git.openwrt.org/?p=openwrt.git;a=commit;h=d18f9d5f17e190cfbb836a4acff2d96c0d466a2c
 
 Building
 -----
@@ -34,7 +34,7 @@ Flashing
 
   setenv meraki_bootkernel bootm \${meraki_loadaddr_kernel} - \${meraki_loadaddr_fdt}
 
-  setenv openwrt_bootargs setenv bootargs board=MR24 console=ttyS0,\${baudrate} rootfstype=squashfs mtdoops.mtddev=oops
+  setenv openwrt_bootargs setenv bootargs console=ttyS0,\${baudrate} rootfstype=squashfs mtdoops.mtddev=oops
 
   setenv meraki_boot run meraki_ubi openwrt_bootargs\; run meraki_load1 meraki_checkpart meraki_bootkernel\; run meraki_load2 meraki_checkpart meraki_bootlinux
 

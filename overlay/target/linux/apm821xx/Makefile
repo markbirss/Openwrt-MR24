@@ -21,8 +21,7 @@ include $(INCLUDE_DIR)/target.mk
 KERNELNAME:=uImage
 
 DEFAULT_PACKAGES += \
-	kmod-leds-gpio kmod-booke-wdt swconfig kmod-ath9k \
-	wpad-mini
+	kmod-leds-gpio kmod-booke-wdt wpad-mini
 
 define Target/Description
 	Build images for AppliedMicro APM821xx based boards.

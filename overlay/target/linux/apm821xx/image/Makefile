@@ -9,6 +9,14 @@ include $(INCLUDE_DIR)/image.mk
 
 DEVICE_VARS += DTS IMAGE_SIZE
 
+define Image/cpiogz
+	( cd $(TARGET_DIR); find . | cpio -o -H newc | gzip -9n >$(KDIR_TMP)/$(IMG_PREFIX)-rootfs.cpio.gz )
+endef
+
+define Build/copy-file
+	cat "$(1)" > "$@"
+endef
+
 define Build/MerakiAdd-dtb
         $(call Image/BuildDTB,../dts/$(DTS).dts,$@.dtb)
 	( \
@@ -19,15 +27,16 @@ define Build/MerakiAdd-dtb
 endef
 
 define Build/MerakiAdd-initramfs
-	$(call Image/mkfs/cpiogz)
+	$(call Image/cpiogz)
 
-	-$(STAGING_DIR_HOST)/bin/mkimage -A powerpc -T ramdisk -C gzip -n "$(PROFILE) OpenWRT rootfs" \
-		-d $(BIN_DIR)/$(IMG_PREFIX)-rootfs.cpio.gz \
-		$(BIN_DIR)/$(IMG_PREFIX)-uramdisk.image.gz
+	-$(STAGING_DIR_HOST)/bin/mkimage -A $(LINUX_KARCH) -O linux -T ramdisk \
+		-C gzip -n "$(PROFILE) OpenWRT rootfs" \
+		-d $(KDIR_TMP)/$(IMG_PREFIX)-rootfs.cpio.gz \
+		$(KDIR_TMP)/$(IMG_PREFIX)-uramdisk.image.gz
 
 	( \
 		dd if=$@ bs=1k conv=sync; \
-		dd if=$(BIN_DIR)/$(IMG_PREFIX)-uramdisk.image.gz bs=$(BLOCKSIZE) conv=sync; \
+		dd if=$(KDIR_TMP)/$(IMG_PREFIX)-uramdisk.image.gz bs=$(BLOCKSIZE) conv=sync; \
 	) > $@.new
 	@mv $@.new $@
 endef
@@ -43,12 +52,13 @@ endef
 define Device/Default
   KERNEL_DEPENDS = $$(wildcard ../dts/$$(DTS).dts)
   KERNEL := kernel-bin | lzma | uImage lzma
+  KERNEL_INITRAMFS := kernel-bin | lzma | uImage lzma
 endef
 
 define Device/mr24
   BOARDNAME = MR24
   BLOCKSIZE := 64k
-  IMAGES := sysupgrade.tar initramfs.bin
+  IMAGES := sysupgrade.tar recovery.bin test.bin
   DTS := MR24
   DTB_SIZE := 63k
   KERNEL_SIZE := 2048k
@@ -56,8 +66,8 @@ define Device/mr24
   KERNEL_ENTRY := 0x00000000
   KERNEL_LOADADDR := 0x00000000
   KERNEL := kernel-bin | gzip | uImage gzip | MerakiAdd-dtb | MerakiNAND
+  IMAGE/recovery.bin := copy-file $(KDIR)/vmlinux | gzip | uImage gzip | MerakiAdd-dtb | pad-to 2047k | MerakiAdd-initramfs | MerakiNAND
   IMAGE/sysupgrade.tar := sysupgrade-nand
-  IMAGE/initramfs.bin := kernel-bin | gzip | uImage gzip | MerakiAdd-dtb | pad-to 2047k | MerakiAdd-initramfs | MerakiNAND
 endef
 TARGET_DEVICES += mr24
 
