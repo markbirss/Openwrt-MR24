@@ -7,6 +7,8 @@
 include $(TOPDIR)/rules.mk
 include $(INCLUDE_DIR)/image.mk
 
+IMAGE_PROFILE:=$(if $(PROFILE),$(PROFILE),Default)
+
 DEVICE_VARS += DTS IMAGE_SIZE
 
 define Image/cpiogz
@@ -50,10 +52,14 @@ define Build/MerakiNAND
 endef
 
 define Device/Default
+  BOARDNAME :=
+  DEVICE_PROFILE = $$(BOARDNAME)
+  PROFILES = Default $$(DEVICE_PROFILE)
   KERNEL_DEPENDS = $$(wildcard ../dts/$$(DTS).dts)
   KERNEL := kernel-bin | lzma | uImage lzma
   KERNEL_INITRAMFS := kernel-bin | lzma | uImage lzma
 endef
+TARGET_DEVICES += Default
 
 define Device/mr24
   BOARDNAME = MR24

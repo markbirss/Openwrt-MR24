@@ -11,7 +11,7 @@ BOARD:=apm821xx
 BOARDNAME:=AppliedMicro APM821xx
 CPU_TYPE:=464
 FEATURES:=squashfs nand rtc ramdisk
-MAINTAINER:=Chris Blake <chrisrblake93@gmail.com>
+MAINTAINER:=Imre Kaloz <kaloz@openwrt.org>
 SUBTARGETS=generic
 
 KERNEL_PATCHVER:=4.4
