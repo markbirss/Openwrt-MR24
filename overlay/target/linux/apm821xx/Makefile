@@ -9,10 +9,9 @@ include $(TOPDIR)/rules.mk
 ARCH:=powerpc
 BOARD:=apm821xx
 BOARDNAME:=AppliedMicro APM821xx
-CPU_TYPE:=464
-FEATURES:=squashfs nand rtc ramdisk
+CPU_TYPE:=464fp
+FEATURES:=squashfs nand rtc fpu ramdisk
 MAINTAINER:=Imre Kaloz <kaloz@openwrt.org>
-SUBTARGETS=generic
 
 KERNEL_PATCHVER:=4.4
 
