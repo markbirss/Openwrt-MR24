@@ -1,3 +1,9 @@
+# LEDE-MR24
+
+**Note:** This repo is outdated, and the Meraki MR24 was merged into LEDE as of commit https://git.lede-project.org/?p=source.git;a=commit;h=a57d6e2d47688cfa392d6ea7f36ae6f9d84affc5 Note the flashing guide below still applies!
+
+----
+
 # Openwrt-MR24
 
 Bringup repo for the Cisco Meraki MR24 on OpenWRT!
