@@ -34,16 +34,12 @@ Flashing
   2. Set the new U-Boot settings to boot our images. This will set the proper UBI partition names, disable initramfs loading for the kenel, and keep it for the recovery initramfs image.
 
   ```
-  setenv meraki_load1 ubi read \${meraki_loadaddr} kernel
-
-  setenv meraki_load2 ubi read \${meraki_loadaddr} recovery
-
-  setenv meraki_bootkernel bootm \${meraki_loadaddr_kernel} - \${meraki_loadaddr_fdt}
-
-  setenv openwrt_bootargs setenv bootargs console=ttyS0,\${baudrate} rootfstype=squashfs mtdoops.mtddev=oops
-
-  setenv meraki_boot run meraki_ubi openwrt_bootargs\; run meraki_load1 meraki_checkpart meraki_bootkernel\; run meraki_load2 meraki_checkpart meraki_bootlinux
-
+  setenv lede_load1 ubi read \${meraki_loadaddr} kernel
+  setenv lede_load2 ubi read \${meraki_loadaddr} recovery
+  setenv lede_bootkernel bootm \${meraki_loadaddr_kernel} - \${meraki_loadaddr_fdt}
+  setenv lede_bootargs setenv bootargs console=ttyS0,\${baudrate} rootfstype=squashfs mtdoops.mtddev=oops
+  setenv lede_boot run meraki_ubi lede_bootargs\; run lede_load1 meraki_checkpart lede_bootkernel\; run lede_load2 meraki_checkpart meraki_bootlinux
+  setenv bootcmd run lede_boot
   saveenv
   ```
 
